@@ -1,0 +1,529 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+}
+
+main ::-webkit-scrollbar {
+  display: none;
+}
+.dialog-content ::-webkit-scrollbar {
+  display: visible;
+}
+
+.mapchanger {
+  cursor: pointer;
+}
+.game {
+  display: inline-block;
+  position: relative;
+}
+.default-user:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.preloader-background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+img {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.blur {
+  -webkit-filter: blur(10px);
+}
+
+.scriptbox {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-style: solid;
+  border-color: rgba(255, 0, 0, 0.5);
+  z-index: 3;
+}
+
+.scriptedit {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  border-style: solid;
+  border-color: rgba(0, 255, 0, 0.5);
+  z-index: 3;
+}
+
+.script {
+  position: relative;
+  font-color: white;
+  height: 30px;
+  width: 100%;
+  color: white;
+border-radius: 10px;
+-webkit-box-shadow: 0 1px 6px 2px rgba(0, 0, 0, .1), 0 0 40px rgba(0, 0, 0, 0.3) inset;
+box-shadow: 0 1px 6px 2px rgba(0, 0, 0, .5), 0 0 40px rgba(0, 0, 0, 0.3) inset;
+
+
+}
+
+.scriptns{
+background-color: #0072c6;
+}
+.scripts{
+background-color: #666699;
+}
+
+.script p {
+  position: absolute;
+  left: 10;
+  top: -10;
+}
+
+.script button {
+  position: absolute;
+  top: 0;
+  height: 24px;
+}
+
+.scriptnameedit{
+right : 120px;
+}
+.scriptdelete{
+right : 20px;
+}
+.scriptbuttonedit{
+
+right : 70px;
+}
+
+.scriptns:hover {
+  background-color: #2086bf;
+}
+.scripts:hover {
+  background-color:#808080;
+}
+
+.bsod {
+  color: #FFF;
+  background: #008CFF;
+  margin: 0;
+  height: 100%;
+  position: relative;
+  display: none;
+}
+
+.bsod #errorhook {
+  position: absolute;
+  left: 10%;
+  top: 10%;
+  right: 10%;
+}
+
+.bsod h1 {
+  font-size: 8em;
+  margin: 0;
+}
+
+.bsod p {
+  font-size: 1.4em;
+  margin-bottom: 3em;
+}
+
+#sortable {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 60%;
+}
+
+#sortable li {
+  margin: 0 3px 3px 3px;
+  padding: 0.4em;
+  padding-left: 1.5em;
+}
+
+#gamehook {
+  overflow: scroll;
+  height: 400px;
+  width: 90%;
+  position: absolute;
+  margin: auto;
+  top: 10px;
+  right: 0;
+  left: 0;
+}
+#gamehook.overlay {
+    background-color: SlateGray;
+    position:relative;
+    width: 100%;
+    height: 100%;
+    opacity: 0.20;
+    -moz-opacity: 20%;
+    -webkit-opacity: 20%;
+    z-index: 2;
+}
+
+#gamebackground {
+display:none;
+  overflow: scroll;
+  height: 400px;
+  width: 90%;
+  background-color : black;
+  position: absolute;
+  margin: auto;
+  top: 60px;
+  right: 0;
+  left: 0;
+}
+
+#mapcanvas {
+  position: relative;
+  z-index: 0;
+}
+
+#mapbcanvas {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+}
+
+#mousefollow {
+  display: none;
+  z-index: 123;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background-color: black;
+  opacity: 0.5;
+  top: 0px;
+  left: 0px;
+}
+
+#choosehook {
+  position: absolute;
+  margin: auto;
+  top: 300px;
+  right: 0;
+  left: 0;
+  width: 300px;
+  height: 100px;
+  display: none;
+  z-index: 3;
+}
+
+#textbox {
+  position: absolute;
+  margin: auto;
+  top: 350px;
+  right: 0;
+  left: 0;
+  width: 300px;
+  height: 100px;
+  z-index: 12;
+  background-color: rgba(0, 0, 0, 0.5);
+  ;
+  display: none;
+}
+
+#textbox .content {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0);
+  width: 80%;
+  height: 80%;
+  margin: auto;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 13;
+}
+
+#textbox p {
+  opacity: 0.9;
+  color: white;
+}
+
+.buttoncontainer {
+  width: 85%;
+  position: absolute;
+  top: 80;
+  margin: auto;
+  right: 0;
+  left: 0;
+  z-index: 5;
+}
+
+.buttoncontainer button {
+  display: none;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-color: #ffffff;
+}
+
+#gamemenu {
+  width: 80%;
+  position: absolute;
+  margin: auto;
+  top: 120px;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  display: none;
+  overflow: scroll;
+}
+
+.tile {
+  background: #0072c6;
+  color: #FFF;
+}
+
+#bagmenu {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  margin: auto;
+  top: 60px;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  display: none;
+  overflow: scroll;
+}
+
+#pokedex {
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  margin: auto;
+  top: 60px;
+  right: 0;
+  left: 8%;
+  z-index: 3;
+  display: none;
+  overflow: scroll;
+}
+
+#partymenu {
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  margin: auto;
+  top: 60px;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  display: none;
+  overflow: scroll;
+}
+
+#start {
+  width: 80%;
+  height: 400px;
+  position: absolute;
+  margin: auto;
+  top: 60px;
+  right: 0;
+  left: 0;
+  z-index: 3;
+}
+
+#scriptconsole {
+  width: 80%;
+  height: 100px;
+  position: absolute;
+  margin: auto;
+  top: 500px;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  display: none;
+  background-color: white;
+}
+
+#battle {
+  width: 85%;
+  height: 400px;
+  position: absolute;
+  margin: auto;
+  top: 60px;
+  right: 0;
+  left: 0;
+  z-index: 3;
+  display: none;
+  overflow: scroll;
+}
+
+#battleactions {
+  position: absolute;
+  margin: auto;
+  top: 410px;
+  right: 0;
+  left: 0;
+  width: 300px;
+  height: 100px;
+  z-index: 12;
+}
+
+#battleactions button {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-color: #ffffff;
+}
+
+.playerpokemon {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.enemypokemon {
+  position: absolute;
+  top: 10%;
+  right: 10%;
+  z-index: 10;
+}
+
+.lifebarwrap {
+position:absolute;
+display:none;
+top : 300px;
+right : 10%;
+width : 240px;
+height : 60px;
+z-index : 10;
+background-image: url("../assets/battles/spr_battle_ui_1.png");
+}
+
+.lifebar {
+  position: absolute;
+  height: 4px;
+  background-color: green;
+  z-index : 11;
+  top : 19px;
+  left: 101px;
+}
+
+.expbar {
+height: 4px;
+    background-color: cyan;
+    width: 159;
+    position: absolute;
+    top: 44;
+    left: 53;
+    z-index: 11;
+}
+
+.hp-lifebarps{
+position: absolute;
+    top: 11;
+    right: 95;
+    z-index: 11;
+    color: white;
+    text-align: right;
+}
+.hp-lifebarpsm{
+position: absolute;
+    top: 11;
+    left: 161;
+    z-index: 11;
+    color: white;
+    text-align: left;
+}
+
+.lv-lifebar{
+position: absolute;
+    top: -15;
+    left: 170;
+    z-index: 11;
+    color: white;
+}
+
+.status-lifebar{
+position:absolute;
+top : 120px;
+left : 10%;
+
+}
+.lifebarwrapenemy {
+display:none;
+position:absolute;
+top : 120px;
+left : 10%;
+width : 240px;
+height : 60px;
+z-index : 10;
+background-image: url("../assets/battles/spr_battle_ui_0.png");
+}
+
+.lifebarenemy {
+  position: absolute;
+  height: 4px;
+  background-color: green;
+  z-index : 11;
+  top : 19px;
+  left: 77px;
+}
+
+.lv-lifebarenemy{
+position: absolute;
+left: 180;
+z-index: 11;
+top: -15;
+color: white;
+}
+
+.enemynamelifebar{
+position: absolute;
+right: 90;
+z-index: 11;
+top: -15;
+color: white;
+text-align: right;
+}
+
+.namelifebar{
+position: absolute;
+top: -15;
+right: 100;
+z-index: 11;
+color: white;
+text-align: right;
+}
+
+.right-panel {
+  position: absolute;
+  height: 100%;
+  right: 0;
+  width: 80%;
+}
+
+.mousefollow {
+  z-index: 123;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background-color: black;
+  opacity: 0.5;
+  top: 0px;
+  left: 0px;
+}

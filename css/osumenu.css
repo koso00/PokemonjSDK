@@ -1,0 +1,150 @@
+/*
+ * OSU Menu for jQuery JavaScript Library
+ *
+ * Copyright (c) 2013, johnmave126
+ * All rights reserved.
+ * Distributed Under BSD 2-clause License
+ *
+ * Author:  John Tan
+ * Version:  0.1
+ */
+
+/*
+ * Color List
+ * blue:  #3e86de
+ * orange:  #e96800
+ * red:  #ca2145
+ * pink:  #e1899b
+ * light-blue:  #478de3
+ */
+
+.osu-wrapper {
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.osu-wrapper .osu-item {
+	width: 110%;
+
+	margin: 0;
+	color: white;
+	font-size: 120%;
+	padding: 0.3em 0.5em;
+	overflow: hidden;
+	cursor: pointer;
+	background-color: #e96800;
+ 	border-radius: 25px;
+	height : 50px;
+	-webkit-box-shadow: 0 1px 6px 2px rgba(0, 0, 0, .2), 0 0 40px rgba(0, 0, 0, 0.3) inset;
+	box-shadow: 0 1px 6px 2px rgba(0, 0, 0, .2), 0 0 40px rgba(0, 0, 0, 0.3) inset;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=95)";
+	filter: alpha(opacity=95);
+	opacity: 0.95;
+
+	-webkit-transition: margin-top 0.8s ease-out, margin-bottom 0.8s ease-out, -webkit-transform 0.8s ease-out, background-color 50ms ease-in, color 50ms ease-in;
+	-moz-transition: margin-top 0.8s ease-out, margin-bottom 0.8s ease-out, -moz-transform 0.8s ease-out, background-color 50ms ease-in, color 50ms ease-in;
+	-o-transition: margin-top 0.8s ease-out, margin-bottom 0.8s ease-out, -o-transform 0.8s ease-out, background-color 50ms ease-in, color 50ms ease-in;
+	-ms-transition: margin-top 0.8s ease-out, margin-bottom 0.8s ease-out, -ms-transform 0.8s ease-out, background-color 50ms ease-in, color 50ms ease-in;
+	transition: margin-top 0.8s ease-out, margin-bottom 0.8s ease-out, transform 0.8s ease-out, background-color 50ms ease-in, color 50ms ease-in;
+
+	-webkit-transform: translateX(30%) scale(1);
+	-moz-transform: translateX(30%) scale(1);
+	-o-transform: translateX(30%) scale(1);
+	-ms-transform: translateX(30%) scale(1);
+	transform: translateX(30%) scale(1);
+}
+
+.osu-wrapper .osu-item.osu-selected {
+	background-color: rgba(255, 255, 255, .7);
+	color: black;
+
+	-webkit-transform: translateX(10%) scale(1.1);
+	-moz-transform: translateX(10%) scale(1.1);
+	-o-transform: translateX(10%) scale(1.1);
+	-ms-transform: translateX(10%) scale(1.1);
+	transform: translateX(10%) scale(1.1);
+}
+
+.osu-wrapper .osu-item.osu-selected:hover {
+	margin-top: 0.6em !important;
+	margin-bottom: 0.6em !important;
+
+	-webkit-transform: translateX(5%) scale(1.05) !important;
+	-moz-transform: translateX(5%) scale(1.05) !important;
+	-o-transform: translateX(5%) scale(1.05) !important;
+	-ms-transform: translateX(5%) scale(1.05) !important;
+	transform: translateX(5%) scale(1.05) !important;
+}
+
+.osu-wrapper .osu-item:not(.osu-selected):hover {
+	margin-top: 0.6em !important;
+	margin-bottom: 0.6em !important;
+
+	-webkit-transform: translateX(15%) scale(1.05) !important;
+	-moz-transform: translateX(15%) scale(1.05) !important;
+	-o-transform: translateX(15%) scale(1.05) !important;
+	-ms-transform: translateX(15%) scale(1.05) !important;
+	transform: translateX(15%) scale(1.05) !important;
+}
+
+.osu-wrapper .osu-item.loading {
+	-webkit-transform: translateX(10%) scale(1);
+	-moz-transform: translateX(10%) scale(1);
+	-o-transform: translateX(10%) scale(1);
+	-ms-transform: translateX(10%) scale(1);
+	transform: translateX(10%) scale(1);
+	margin-top: 3em;
+}
+
+.osu-wrapper .osu-item .osu-item-subtitle {
+position: absolute;
+	top: 15px;
+	left: 30%;
+}
+
+.osu-wrapper .osu-item .osu-item-title {
+position: absolute;
+	top: 10px;
+	left: 5%;
+}
+
+.osu-wrapper .osu-list-wrapper {
+	position: relative;
+	top: 50%;
+	overflow: visible;
+}
+
+.osu-wrapper .osu-spacer {
+	position: relative;
+	top: 50%;
+	height: 50%;
+	z-index: -1;
+}
+/*
+ * Color List
+ * blue:  #3e86de
+ * orange:  #e96800
+ * red:  #ca2145
+ * pink:  #e1899b
+ * light-blue:  #478de3
+ */
+.osu-item.osu-blue {
+	background-color: #3e86de;
+}
+.osu-item.osu-orange {
+	background-color: #e96800;
+}
+.osu-item.osu-red {
+	background-color: #ca2145;
+}
+.osu-item.osu-pink {
+	background-color: #e1899b;
+}
+.osu-item.osu-light-blue {
+	background-color: #478de3;
+}

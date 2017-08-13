@@ -86,7 +86,7 @@
 
     <div id="mousefollow"> </div>
     <div id="scriptboxcontainer"></div>
-
+    <div id="npccontainer"></div>
     <div id="dropdownmenu" style="position:absolute">
     <a  style="display:none;" href="" class="dropdown-toggle"></a>
     <ul id="dropadd" class="d-menu" data-role="dropdown"  data-no-close="true">
@@ -257,6 +257,7 @@ menuclose();
     <a class="button" onclick="addline('giveitem')"> GiveItem </a>
     <a class="button" onclick="addline('die')"> Die </a>
     <a class="button" onclick="addline('warp')"> Warp </a>
+    <a class="button" onclick="addline('movenpc')"> MoveNpc </a>
 
       <div  class="input-control select">
     <select id="scripttype">

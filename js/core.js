@@ -23,6 +23,7 @@ var mouse = {
   top: 0
 };
 var j_ = 0;
+var j__ = 0;
 var menu_flag = false;
 for (i = 0; i < 6; i++) {
   party[i] = {
@@ -470,6 +471,7 @@ function keyDown(e) {
      if ($("#scriptconsole").is(":visible") == true) {
        $("#mousefollow").hide();
        $("#scriptconsole").hide();
+       $("#selectednpc").remove();
        if (edit_script == true)
        {
          map.scripts.push(edit_script_content);
@@ -619,12 +621,48 @@ function populatenpclist()
             }
           }
 }
-function drawnpc(j,i,id)
+
+function drawnpc(j,i,d,id,special)
 {
   c = id;
+  if (special == false)
+  {
+  npcmoving = c.id.substr(3,c.id.length);
+  npcmoving = map.scripts[parseInt(npcmoving)].moving;
+}else{npcmoving = false;}
+
   c.width = 64;
   c.height = 64;
   npc = c.getContext("2d");
   npc.clearRect(0, 0, c.width, c.height);
-  npc.drawImage(npcsprite,j * 32, i*32 + i * (32*9), 32, 32, 0 , 0, 64, 64)
+  rot = 1;
+  j = parseInt(j);
+  i = parseInt(i);
+  d = parseInt(d);
+  i__ = 1;
+
+  switch(d)
+  {
+    case 0:i__ =2;break;
+    case 90 : i__ = 1;break;
+    case 270 : i__ = 0;break;
+    case 180: i__ = 2;break;
+  }
+  if ((npcmoving == true) && (j__ != 0))
+  {
+    switch(d)
+    {
+    case 0:i__ = 6+ j__;break;
+    case 90 : i__ = 2 + j__;break;
+    case 270 : i__ = 4 + j__;break;
+    case 180:i__ = 6+ j__;break;
+    }
+  }
+  npc.drawImage(npcsprite,j * 32, (i__*32) +  i * (32*9), rot * 32,rot* 32, 0 , 0, 64, 64)
+  if (d == 0)
+  {
+    $("#"+c.id).addClass("flip");
+  }else{
+    $("#"+c.id).removeClass("flip");
+  }
 }

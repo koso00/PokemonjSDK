@@ -1,3 +1,13 @@
+npclife1 = setInterval(function(){},1000);
+npclife2 = setInterval(function(){},1000);
+clearInterval(npclife1);
+clearInterval(npclife2);
+
+mset = [{entity : "carlo",
+            move: ["up","left","up"]},
+           {entity : "anna",
+            move: ["up","right","up"]}
+          ];
 function scriptcore() {
   if (programcounter == 0)
     {
@@ -108,6 +118,12 @@ function scriptcore() {
     playerPos.gridy = parseInt(pr.arg3); },500);
 
   }
+
+  if (pr.exe == "movenpc")
+  {
+    moveroutine_init(pr.arg1);
+  }
+
 
   if (pr.exe == "givepokemon") {
 
@@ -223,3 +239,139 @@ function textcacher() {
   setTimeout(textcacher, 50);
 }
 textcacher();
+
+
+
+function npcentities(){
+  $(".npc").remove();
+  for (i = 0; i < map.scripts.length; i++)
+  {
+    if (map.scripts[i].type == "npc")
+    {
+      $("#npccontainer").append("<div style='position:absolute; z-index:2;' class='npc'><canvas id = 'npc" + i+"'></canvas></div>");
+    }
+  }
+
+}
+
+function npclife(){
+  old_j__ = 1;
+  npclife1 = setInterval(function(){
+
+  if ((j__ == 1) || (j__ == 2)) {old_j__ = j__ ; j__  = 0}
+  else{ if (old_j__ == 1){j__ = 2}else{j__ = 1} }
+
+
+
+
+    for (i = 0; i < map.scripts.length; i++)
+    {
+      if (map.scripts[i].type == "npc")
+      {
+        drawnpc(map.scripts[i].npcx,map.scripts[i].npcy,map.scripts[i].npcdirection,document.getElementById("npc" + i),false);
+      }
+    }
+  },100);
+
+  npclife2 = setInterval(function(){
+    for (i = 0; i < map.scripts.length; i++)
+    {
+      if (map.scripts[i].type == "npc")
+      {
+        npcpos = map.scripts[i];
+        if ((npcpos.x *32 != npcpos.movetox) || (npcpos.y *32 != npcpos.movetoy))
+        {
+          map.scripts[i].moving = true;
+        if  (npcpos.x *32 != npcpos.movetox)
+        {
+          if (npcpos.x *32 > npcpos.movetox) {npcpos.movetox += 1; map.scripts[i].npcdirection = 0;}
+          else {npcpos.movetox -= 1;map.scripts[i].npcdirection = 180;}
+        }
+
+        if  (npcpos.y *32 != npcpos.movetoy)
+        {
+          if (npcpos.y *32 > npcpos.movetoy) {npcpos.movetoy += 1;map.scripts[i].npcdirection = 270;}
+          else {npcpos.movetoy -= 1; map.scripts[i].npcdirection = 90;}
+        }
+        }
+
+        if ((npcpos.x *32 == npcpos.movetox) && (npcpos.y *32 == npcpos.movetoy))
+        {
+        if (map.scripts[i].moving == true){
+            map.scripts[i].moving = false;
+            if (map.scripts[i].movingonscript == true){
+              map.scripts[i].movingonscript = false;
+
+              //console.log(map.scripts[i].npcid + " ended his step")
+              for (g = 0; g < moveset.length; g ++)
+              {
+                if (moveset[g].entity == map.scripts[i].npcid )
+                {
+                  moveroutine(g);
+                }
+              }
+
+            }
+            }
+        }
+
+        $("#npc"+i).parent().css("left",npcpos.movetox - 16 );
+        $("#npc"+i).parent().css("top",npcpos.movetoy -32);
+
+      }
+    }
+  },1000/60);
+}
+
+
+function moveroutine_init(mset)
+{
+  moveset = mset;
+  moveroutine_complete = 0;
+  routine_counter = [0,0,0,0];
+  moveset = mset;
+  moveroutine_complete = moveset.length;
+  for (asd = 0; asd < moveset.length ; asd++)
+  {
+    moveroutine(asd);
+  }
+}
+
+function moveroutine(i)
+{
+  if (routine_counter[i] != moveset[i].move.length)
+  {
+    for (g = 0; g < map.scripts.length ; g++)
+      {
+        if (map.scripts[g].npcid != undefined)
+        {
+        if (moveset[i].entity == map.scripts[g].npcid)
+          {
+            map.scripts[g].movingonscript = true;
+            //console.log(map.scripts[g].npcid + " is moving " + moveset[i].move[routine_counter[i]]);
+            switch(moveset[i].move[routine_counter[i]])
+            {
+              case "up":map.scripts[g].y --;  break;
+              case "left":map.scripts[g].x --; break;
+              case "right": map.scripts[g].x++; break;
+              case "down": map.scripts[g].y ++;break;
+            }
+          }
+        }
+      }
+  routine_counter[i] ++;
+  }else{
+    moveroutine_complete --;
+    //console.log(moveset[i].entity + " ended his route")
+  }
+
+  if (moveroutine_complete == 0)
+  {
+    scriptcore();
+  }
+}
+
+function npckill(){
+clearInterval(npclife1);
+clearInterval(npclife2);
+}

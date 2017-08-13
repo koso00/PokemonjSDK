@@ -4,6 +4,15 @@ body {
   background: #ffffff;
 }
 
+.flip{
+-moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+}
+
 main ::-webkit-scrollbar {
   display: none;
 }
@@ -91,6 +100,13 @@ background-color: #0072c6;
 background-color: #666699;
 }
 
+.scriptns:hover {
+  background-color: #2086bf;
+}
+.scripts:hover {
+  background-color:#808080;
+}
+
 .script p {
   position: absolute;
   left: 10;
@@ -120,6 +136,41 @@ right : 70px;
 .scripts:hover {
   background-color:#808080;
 }
+
+.npcmovelist{
+position: relative;
+font-color: white;
+min-height: 30px;
+width: 90%;
+color: white;
+border-radius: 10px;
+-webkit-box-shadow: 0 1px 6px 2px rgba(0, 0, 0, .1), 0 0 40px rgba(0, 0, 0, 0.3) inset;
+box-shadow: 0 1px 6px 2px rgba(0, 0, 0, .5), 0 0 40px rgba(0, 0, 0, 0.3) inset;
+background-color: white;
+}
+
+.npcmovedir {
+  position: relative;
+  font-color: white;
+  padding-top : 2px;
+  padding-bottom: 2px;
+  height: 20px;
+  width: 95%;
+  left : 0;
+  right : 0;
+  margin : auto;
+  color: white;
+border-radius: 10px;
+-webkit-box-shadow: 0 1px 6px 2px rgba(0, 0, 0, .1), 0 0 40px rgba(0, 0, 0, 0.3) inset;
+box-shadow: 0 1px 6px 2px rgba(0, 0, 0, .5), 0 0 40px rgba(0, 0, 0, 0.3) inset;
+background-color: #666699;
+}
+
+.npcmovedir:hover {
+  background-color:#808080;
+}
+
+
 
 .bsod {
   color: #FFF;

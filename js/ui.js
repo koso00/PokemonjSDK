@@ -43,18 +43,19 @@ function populateparty() {
 
 function menuopen() {
   $("#gamemenu").show();
-  $("#gamehook").addClass("blur");
+
   pause = true;
 }
 
 function menuclose() {
   $("#gamemenu").hide();
-  $("#gamehook").removeClass("blur");
+
   pause = false;
 }
 
 
 function bagopen() {
+  $("#gamehook").addClass("blur");
   $("#menubutton").hide();
   $("#bagbutton").show();
   $("#gamemenu").hide();
@@ -62,6 +63,7 @@ function bagopen() {
 }
 
 function bagclose() {
+  $("#gamehook").removeClass("blur");
   $("#menubutton").show();
   $("#bagbutton").hide();
   $("#gamemenu").show();
@@ -69,6 +71,7 @@ function bagclose() {
 }
 
 function pkdexopen() {
+  $("#gamehook").addClass("blur");
   $("#menubutton").hide();
   $("#bagbutton").show();
   $("#gamemenu").hide();
@@ -76,6 +79,7 @@ function pkdexopen() {
 }
 
 function pkdexclose() {
+  $("#gamehook").removeClass("blur");
   $("#menubutton").show();
   $("#bagbutton").hide();
   $("#gamemenu").show();
@@ -83,6 +87,7 @@ function pkdexclose() {
 }
 
 function partyopen() {
+  $("#gamehook").addClass("blur");
   $("#menubutton").hide();
   $("#bagbutton").show();
   $("#gamemenu").hide();
@@ -90,6 +95,7 @@ function partyopen() {
 }
 
 function partyclose() {
+  $("#gamehook").removeClass("blur");
   $("#menubutton").show();
   $("#bagbutton").hide();
   $("#gamemenu").show();
@@ -112,4 +118,62 @@ function introanimation(){
   $("#anitop").animate({top:0},500)
   $("#anibot").animate({bottom:0},500)
   },2000)
+}
+
+
+
+function create_dialog(data){
+    var dlg, id, html, buttons, button;
+
+    id = "dialog_id_" + (new Date()).getTime();
+    dlg = $("<div id='"+id+"' class='blankslate' style='width:80%; left: 0; right:0; margin:auto;position:absolute; top:10%;z-index:9999999;'</div>");
+
+    if (data.title !== undefined) {
+        $("<h3 >"+data.title+"</h3>").appendTo(dlg);
+    }
+    if (data.content !== undefined) {
+        $("<div class='dialog-content'>"+data.content+"</div>").appendTo(dlg);
+    }
+    if (data.actions !== undefined && typeof data.actions == 'object') {
+
+        buttons = $("<div class='docs-example clearfix'></div>").appendTo(dlg);
+
+        $.each(data.actions, function(){
+            var item = this;
+
+            button = $("<a>").attr("type", "button").addClass("btn").html(item.title);
+
+            if (item.cls !== undefined) {
+                button.addClass(item.cls);
+            }
+
+            button.appendTo(buttons);
+
+            if (item.onclick != undefined) {
+
+                button[0].addEventListener("click", function(){
+                    if (typeof item.onclick === 'function') {
+                        item.onclick(dlg);
+                    } else {
+                        if (typeof window[item.onclick] === 'function') {
+                            window[item.onclick](dlg);
+                        } else {
+                            var result = eval("(function(){"+item.onclick+"})");
+                            result.call(dlg);
+                        }
+                    }
+                }, true);
+            }
+        });
+    }
+
+    dlg.appendTo($("body"));
+
+    var dlg_options = $.extend({}, {
+        show: true,
+        closeAction: true,
+        removeOnClose: true
+    }, (data.options != undefined ? data.options : {}));
+
+    return dlg.dialog(dlg_options);
 }

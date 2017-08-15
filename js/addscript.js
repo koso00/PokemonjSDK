@@ -42,7 +42,7 @@ function addscript(npc){
     pause = true;
     if (npc == true)
     {
-      $.Dialog({
+      create_dialog({
         title: "Choose your npc",
         content: "",
         actions: [{
@@ -60,7 +60,7 @@ function addscript(npc){
               scriptobj.movetoy = scriptcoor.y *32 ;
               scriptobj.orx = scriptcoor.x;
               scriptobj.ory = scriptcoor.y;
-              $("#scriptconsole").append("<canvas id='selectednpc'></canvas>");
+              $("#scriptconsole").append("<canvas id='selectednpc' ></canvas><br>");
               drawnpc($("#dialog-input2").val(),$("#dialog-input3").val(),scriptobj.npcdirection,document.getElementById("selectednpc"),true);
               $(el).data('dialog').close();
               $("#mousefollow").hide();
@@ -71,6 +71,10 @@ function addscript(npc){
             title: "Cancel",
             onclick: function(el) {
               if (lineobj.exe == undefined) { line.remove();}
+              $("#mousefollow").hide();
+              $("#scriptconsole").hide();
+              codeview();
+              pause = false;
               $(el).data('dialog').close();
             }
           }
@@ -78,7 +82,7 @@ function addscript(npc){
         options: options
       });
       $(".dialog-content").append("<p> id </p><input id ='dialog-input' type='text'  > <p> x </p><input id ='dialog-input2' type='text'  > </input> <p> y </p><input id ='dialog-input3' type='text'> </input> <br> ");
-      $(".dialog-content").append("<div style='position:relative ; width:100%; overflow:scroll; ::-webkit-scrollbar {display: visible;}' >  <div class='mousefollow'></div> <canvas id='dialogcanvas'></canvas></div>");
+      $(".dialog-content").append("<div style='position:relative ; width:100%; overflow:scroll; ::-webkit-scrollbar {display: visible;}' >  <div class='mousefollow'></div> <canvas id='dialogcanvas' class='left'></canvas></div>");
       populatenpclist();
             $('.dialog-content').find("div").on("click",function(){
         $("#dialog-input2").val(Math.floor(m_left / 32));
@@ -121,7 +125,7 @@ function addline(id) {
   exe = lineobj.exe;
 }
   if (exe == "text") {
-    $.Dialog({
+    create_dialog({
       title: "Input your Text",
       content: "",
       actions: [{
@@ -157,7 +161,7 @@ function addline(id) {
   }
 
   if (exe == "choose") {
-    $.Dialog({
+    create_dialog({
       title: "Input your Text",
       content: "",
       actions: [{
@@ -204,7 +208,7 @@ function addline(id) {
 
 
   if (exe == "givepokemon") {
-    $.Dialog({
+    create_dialog({
       title: "Insert the id and the level of pokemon",
       content: "",
       actions: [{
@@ -236,7 +240,7 @@ function addline(id) {
   }
 
   if (exe == "giveitem") {
-    $.Dialog({
+    create_dialog({
       title: "Insert the id of the item",
       content: "",
       actions: [{
@@ -267,7 +271,7 @@ function addline(id) {
 
 
   if (exe == "warp") {
-      $.Dialog({
+      create_dialog({
       title: "Canvas",
       content: "",
       actions: [{
@@ -329,7 +333,7 @@ function addline(id) {
 
 
   if (exe == "movenpc") {
-    $.Dialog({
+    create_dialog({
       title: "Input id and direction of npc",
       content: "",
       actions: [{
@@ -371,8 +375,8 @@ function addline(id) {
     t = lineobj.arg1 || "";
 
 
-    string = "<div  class='input-control select'><select> ";
-    string2 = "";
+    string = "<div  class='input-control select'><select><option>player</option> ";
+    string2 = "<div class='npcmovelist' style='display:none;' id='npcmoveplayer'></div>";
     for (i = 0; i< map.scripts.length;i++) {
       if (map.scripts[i].type == "npc"){
       console.log("found a npc")
@@ -410,7 +414,7 @@ function addline(id) {
 
 function nameedit() {
   id = JSON.parse($(".nameedit").attr("data-script"));
-    $.Dialog({
+    create_dialog({
       title: "Input the name of your section",
       content: "Leave blank if you want to delete your section name",
       actions: [{
@@ -556,9 +560,26 @@ function codeview() {
   npclife();
 }
 
+function closeconsole(){
+  if ($("#scriptconsole").is(":visible") == true) {
+    $("#mousefollow").hide();
+    $("#scriptconsole").hide();
+    $("#selectednpc").remove();
+    if (edit_script == true)
+    {
+      map.scripts.push(edit_script_content);
+      edit_script = false;
+    }
+    codeview();
+    pause = false;
+  }
+}
+
 $("#introdiv").mousedown(function(ev){
   if ((ev.which == 3) && ($("#scriptconsole").is(":visible") == false))
   {
+    $("#dropedit").hide();
+    $("#dropadd").hide();
     scriptcoor = {
       x: Math.floor(mouse.left / 32),
       y: Math.floor(mouse.top / 32)
@@ -570,15 +591,28 @@ $("#introdiv").mousedown(function(ev){
     $("#dropdownmenu").css("top",mouse.top);
     if (map.scripts.length != 0){
     for (i = 0; i < map.scripts.length; i++) {
-      if ((Math.floor(mouse.left / 32) == map.scripts[i].x) && (Math.floor(mouse.top / 32) == map.scripts[i].y))
+      if ((scriptcoor.x == map.scripts[i].x) && (scriptcoor.y == map.scripts[i].y))
       {
-        $("#dropedit").fadeIn(200);
-    }else{
-      $("#dropadd").fadeIn(200);
+        $("#dropadd").hide();
+        console.log("edit because script")
+        $("#dropedit").show(200);
+    }else{ if ($("#dropedit").is(":visible") == false){
+      console.log("add because script")
+      $("#dropadd").show(200);}
     }
-  }}else{
-    $("#dropadd").fadeIn(200);
+  }
+}else{
+    console.log("add because no script")
+    $("#dropadd").show(200);
   }
 
+
+  }
+})
+
+$("body").click(function(){
+  if (($("#dropedit").is(":visible") == true) || ($("#dropadd").is(":visible") == true)){
+    $("#dropedit").hide(200);
+    $("#dropadd").hide(200);
   }
 })

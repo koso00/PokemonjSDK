@@ -284,14 +284,14 @@ function npclife(){
           map.scripts[i].moving = true;
         if  (npcpos.x *32 != npcpos.movetox)
         {
-          if (npcpos.x *32 > npcpos.movetox) {npcpos.movetox += 1; map.scripts[i].npcdirection = 0;}
-          else {npcpos.movetox -= 1;map.scripts[i].npcdirection = 180;}
+          if (npcpos.x *32 > npcpos.movetox) {npcpos.movetox += 2; map.scripts[i].npcdirection = 0;}
+          else {npcpos.movetox -= 2;map.scripts[i].npcdirection = 180;}
         }
 
         if  (npcpos.y *32 != npcpos.movetoy)
         {
-          if (npcpos.y *32 > npcpos.movetoy) {npcpos.movetoy += 1;map.scripts[i].npcdirection = 270;}
-          else {npcpos.movetoy -= 1; map.scripts[i].npcdirection = 90;}
+          if (npcpos.y *32 > npcpos.movetoy) {npcpos.movetoy += 2;map.scripts[i].npcdirection = 270;}
+          else {npcpos.movetoy -= 2; map.scripts[i].npcdirection = 90;}
         }
         }
 
@@ -341,6 +341,19 @@ function moveroutine(i)
 {
   if (routine_counter[i] != moveset[i].move.length)
   {
+    if (moveset[i].entity == "player")
+    {
+      playermovingonscript = true;
+      moving = true;
+      switch(moveset[i].move[routine_counter[i]])
+      {
+        case "up": moveto.y -= 32; playerPos.gridy --; break;
+        case "left": moveto.x -= 32; playerPos.gridx --; break;
+        case "right": moveto.x += 32; playerPos.gridx++; break;
+        case "down": moveto.y += 32; playerPos.gridy ++;break;
+      }
+    }
+    else{
     for (g = 0; g < map.scripts.length ; g++)
       {
         if (map.scripts[g].npcid != undefined)
@@ -359,6 +372,8 @@ function moveroutine(i)
           }
         }
       }
+    }
+
   routine_counter[i] ++;
   }else{
     moveroutine_complete --;

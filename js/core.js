@@ -2,6 +2,7 @@ currentmap = "map/mappa2.json";
 var bump = new Audio('audio/bump.mp3');
 var assets = "assets/"; //set the directory for your assets location
 
+var playermovingonscript = false;
 var joystick = new VirtualJoystick({
   container: document.getElementById("gamehook")
 });
@@ -256,6 +257,13 @@ setInterval(function(){
     }
     if ((playerPos.x == moveto.x) && (playerPos.y == moveto.y)) {
       moving = false;
+      if (playermovingonscript == true)
+      {
+        playermovingonscript = false;
+        moveroutine(0);
+      }
+
+
       if (scriptflag == false) {
         if (map.scripts != undefined) {
           for (i = 0; i < map.scripts.length; i++) {
@@ -274,10 +282,10 @@ setInterval(function(){
               lockplayer = true;
               scriptcore();
             }
-            if ((((playerPos.gridx == map.scripts[i].x) && (playerPos.gridy == map.scripts[i].y + 1) && (playerPos.direction == 90) && (map.scripts[i].type == "button")) ||
-            ((playerPos.gridx == map.scripts[i].x -1 ) && (playerPos.gridy == map.scripts[i].y ) && (playerPos.direction == 0) && (map.scripts[i].type == "button")) ||
-            ((playerPos.gridx == map.scripts[i].x  +1 ) && (playerPos.gridy == map.scripts[i].y ) && (playerPos.direction == 180) && (map.scripts[i].type == "button")) ||
-            ((playerPos.gridx == map.scripts[i].x) && (playerPos.gridy == map.scripts[i].y - 1) && (playerPos.direction == 270) && (map.scripts[i].type == "button"))) && (key.a === true))  {
+            if ((((playerPos.gridx == map.scripts[i].x) && (playerPos.gridy == map.scripts[i].y + 1) && (playerPos.direction == 90) && ((map.scripts[i].type == "button") || (map.scripts[i].type == "npc"))) ||
+            ((playerPos.gridx == map.scripts[i].x -1 ) && (playerPos.gridy == map.scripts[i].y ) && (playerPos.direction == 0) && ((map.scripts[i].type == "button") || (map.scripts[i].type == "npc"))) ||
+            ((playerPos.gridx == map.scripts[i].x  +1 ) && (playerPos.gridy == map.scripts[i].y ) && (playerPos.direction == 180) && ((map.scripts[i].type == "button") || (map.scripts[i].type == "npc"))) ||
+            ((playerPos.gridx == map.scripts[i].x) && (playerPos.gridy == map.scripts[i].y - 1) && (playerPos.direction == 270) && ((map.scripts[i].type == "button") || (map.scripts[i].type == "npc")))) && (key.a === true))  {
               scriptflag = true;
               scriptid = i;
               lockplayer = true;
@@ -290,12 +298,13 @@ setInterval(function(){
     if ((playerPos.x != moveto.x) && (moving == true)) {
       if (playerPos.x < moveto.x) {
         playerPos.x += speed;
-      } else(playerPos.x -= speed);
+        playerPos.direction = 0;
+      } else {playerPos.x -= speed; playerPos.direction = 180;}
     }
     if ((playerPos.y != moveto.y) && (moving == true)) {
       if (playerPos.y < moveto.y) {
-        playerPos.y += speed;
-      } else(playerPos.y -= speed);
+        playerPos.y += speed;playerPos.direction = 270;
+      } else {playerPos.y -= speed; playerPos.direction= 90;}
     }
     $("#moveto").text(playerPos.gridy);
     $("#pos").text(playerPos.x);
@@ -303,8 +312,8 @@ setInterval(function(){
     $("#player").css("top", playerPos.y - 32 + 'px');
     jloaded = true;
   }
-  document.getElementById('gamehook').scrollLeft = playerPos.x - ($("#gamehook").width() / 2) + 32;
-  document.getElementById('gamehook').scrollTop = playerPos.y - ($("#gamehook").height() / 2) + 32;
+  $('#gamehook').scrollLeft(playerPos.x - ($("#gamehook").width() / 2) + 32);
+  $('#gamehook').scrollTop(playerPos.y - ($("#gamehook").height() / 2) + 32);
 
    if (($("#dropedit").is(":visible") == false) && ($("#dropadd").is(":visible")== false))
     {$("#mousefollow").hide();}
@@ -465,7 +474,9 @@ function keyDown(e) {
     key.a = true;
   }
   if (e.keyCode === 13) {
+    if ($("#scriptconsole").is(":visible") == false) {
     key.enter = true;
+  }
   }
   if (e.keyCode === 35) {
      if ($("#scriptconsole").is(":visible") == true) {

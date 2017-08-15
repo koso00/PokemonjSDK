@@ -8,8 +8,8 @@
   <title>Pokemon jSDK</title>
   <script src="js/jquery-3.2.1.min.js"></script>
   <script src="js/jquery-ui.js"></script>
-  <link href="css/metro.css" rel="stylesheet">
   <link href="css/sdk.css" rel="stylesheet">
+  <link href="css/docs.css" rel="stylesheet">
   <link href="css/metro-icons.css" rel="stylesheet">
   	<link rel="stylesheet" href="css/osumenu.css">
   <script src="js/virtualjoystick.js"></script>
@@ -17,7 +17,7 @@
   <script src="js/osumenu.js"></script>
 
 </head>
-<main>
+
   <noscript>
 	<div style="
 	color: #FFF;
@@ -36,74 +36,57 @@
 	</div>
 	</noscript>
 
-  <div class="app-bar">
-    <span class="app-bar-divider"></span>
-    <ul class="app-bar-menu">
-      <li><a href="">SDK</a></li>
+  <header class="masthead">
+        <div class="container">
+          <a href="/" class="masthead-logo">
+            <span class="mega-octicon octicon-package"></span>
+            PokemonJS
+          </a>
+          <nav class="masthead-nav">
+            <div class="form-checkbox"> <label class="text-white"><input id="nocollisioncheck" type="checkbox"/>No collisions</label></div>
+          </nav>
+        </div>
+      </header>
 
-      <li>
-        <a href="" class="dropdown-toggle"><span style="display:block; margin-top : 100%;" class="mif-menu"></span></a>
-        <ul class="d-menu" data-role="dropdown">
-          <li>
-            <a href="" class="dropdown-toggle">Maps</a>
-            <ul  class="d-menu" data-role="dropdown">
-              <?php
-                  $dir = "map/*.json";
-                  foreach (glob($dir) as $filename)
-                       echo "<li><a class='mapchanger' mapvalue =".$filename." >".ltrim(strstr($filename, '/'), '/')."</a></li>";
-                  ?>
-            </ul>
-          </li>
-        <li><a href="mapporter.php">Map porter</a></li>
-        </ul>
-      </li>
-
-      <li style="position:absolute; right : 100px;">
-      <label style=" margin-top : 15px; margin-left:10px;" class="switch-original">
-        <input id="nocollisioncheck" type="checkbox"/>
-        <span class="check"/>
-      </label>
-    </li>
-<li style="position:absolute; right : 10;">No collision</li>
-
-
-    </ul>
-  </div>
-
-  <div id="preloader" style="width:100%;height:100%; position:fixed; top:50px; left:0; background-color : white; z-index : 10;">
-    <div data-role="preloader" data-type="ring" data-style="dark" style="margin:auto; left:0; right:0; top :35%;"></div>
+<main style="position:relative;">
+  <div id="preloader" style="width:100%;height:100%; position:fixed; top:60px; left:0; background-color : #4078c0; z-index : 10;">
+    <div class="loader" style="margin:auto; left:0; right:0; top :40%;"></div>
   </div>
 
 
-  <div id="gamebackground">
+  <div class="gameframes" id="gamebackground">
 
   </div>
 
 
-  <div id="gamehook">
+  <div class="gameframes" id="gamehook">
     <canvas id="mapcanvas"></canvas>
     <canvas id="mapbcanvas"></canvas>
 
     <div id="mousefollow"> </div>
     <div id="scriptboxcontainer"></div>
     <div id="npccontainer"></div>
-    <div id="dropdownmenu" style="position:absolute">
-    <a  style="display:none;" href="" class="dropdown-toggle"></a>
-    <ul id="dropadd" class="d-menu" data-role="dropdown"  data-no-close="true">
-        <li><a onclick='addscript(); $("#dropdownmenu").find("ul").hide(); ' > Add script</a></li>
-        <li><a onclick='addscript(true); $("#dropdownmenu").find("ul").hide(); ' > Add npc</a></li>
-    </ul>
 
-    <a  style="display:none;" href="" class="dropdown-toggle"></a>
-    <ul id="dropedit" class="d-menu" data-role="dropdown">
-        <li><a onclick='addscript(); $("#dropdownmenu").find("ul").hide(); ' > Edit script</a></li>
-        <li><a onclick='removescript(); $("#dropdownmenu").find("ul").hide(); ' > Delete script</a></li>
-    </ul>
+    <div id="dropdownmenu" style="position:absolute; z-index:99999">
+    <a  style="display:none;" onclick="$('#dropadd').toggle()" class="dropdown-toggle"></a>
+
+    <nav id="dropadd" style=" display:none;width : 200px;" class="menu right">
+      <a onclick='addscript(); $("#dropdownmenu").find("nav").hide(); '  class="menu-item " >Add script</a>
+      <a onclick='addscript(true); $("#dropdownmenu").find("nav").hide(); ' class="menu-item" >Add npc</a>
+    </nav>
+
+    <a  style="display:none;" onclick="$('#dropedit').toggle()" class="dropdown-toggle"></a>
+
+    <nav id="dropedit" style=" display:none;width : 200px;" class="menu right">
+      <a onclick='addscript(); $("#dropdownmenu").find("nav").hide(); '  class="menu-item " >Edit script</a>
+      <a onclick='removescript(); $("#dropdownmenu").find("nav").hide(); ' class="menu-item" >Remove script</a>
+    </nav>
+
     </div>
   </div>
 
 
-<div id ="introdiv" style=" right: 0; left: 0; top : 60px; margin : auto; position:absolute; width: 90%; height:400px; overflow:scroll;">
+<div id ="introdiv" class="gameframes" style=" height:400px; overflow:scroll;">
   <div style=" position:relative; height:700px; width:100%;">
 
   <div id ="anitop" style=" z-index : 3 ;position:absolute; top : 0; left : 0;">
@@ -130,40 +113,29 @@
     </div>
   </div>
 
-  <div class="buttoncontainer">
-    <button id="menubutton" onclick="if ($('#gamemenu').is(':visible') == false)
+  <div  class=" gameframes buttoncontainer">
+    <button id="menubutton" class="btn" onclick="if ($('#gamemenu').is(':visible') == false)
 {
 menuopen();
 }else{
 menuclose();
-}" class="button"><span class="mif-menu"></span></button>
-    <button id="bagbutton" onclick="bagclose();partyclose();pkdexclose();" class="button"><span class="mif-chevron-left"></span></button>
+}" ><span class="mif-menu"></span></button>
+    <button id="bagbutton" class="btn" onclick="bagclose();partyclose();pkdexclose();" ><span class="mif-chevron-left"></span></button>
   </div>
 
-  <div class="collection" id="gamemenu" style="">
-    <div onclick="pkdexopen();" class="tile" data-role="tile">
-      <div class="tile-content">
-        <span class="tile-label">Pokedex</span>
-      </div>
-    </div>
-    <div onclick="populateparty();partyopen()" class="tile" data-role="tile">
-      <div class="tile-content">
-        <span class="tile-label">Pokemon</span>
-      </div>
-    </div>
-    <div class="tile" onclick="populatebag(); bagopen();" data-role="tile">
-      <div class="tile-content">
-        <span class="tile-label">Bag</span>
-      </div>
-    </div>
-    <div class="tile" onclick="save()" data-role="tile">
-      <div class="tile-content">
-        <span class="tile-label">Save</span>
-      </div>
-    </div>
+  <div class="gameframes collection" id="gamemenu" style="">
+    <br>
+    <br>
+    <nav style="width : 200px;" class="menu right">
+  <a  onclick="pkdexopen();" class="menu-item selected" href="#">Pokedex</a>
+  <a  onclick="populateparty();partyopen()" class="menu-item" href="#">Pokemon</a>
+  <a  onclick="populatebag(); bagopen();"class="menu-item" href="#">Bag</a>
+  <a onclick="save()"class="menu-item" href="#">Save</a>
+</nav>
+
   </div>
 
-  <div class="collection" id="pokedex">
+  <div class="gameframes collection" id="pokedex">
     <div style="width:30%; heigth : 400px; overflow : scroll;  position:absolute; left: 0; top :0;">
 
       <br>
@@ -189,14 +161,14 @@ menuclose();
 
 
   </div>
-  <div class="collection" id="bagmenu">
+  <div class="gameframes collection" id="bagmenu">
     <div class="padding20">
       <div class="listview" id="baglist">
       </div>
     </div>
   </div>
 
-  <div class="collection" id="partymenu" style="">
+  <div class="gameframes collection" id="partymenu" style="">
     <div class="padding20">
       <div class="" id="partylist">
       </div>
@@ -204,23 +176,24 @@ menuclose();
   </div>
 
   <div class="collection" id="start" style="">
-    <div class="padding20">
-      <div style="background: #008CFF; color:#FFF;" class="tile" onclick="load(); $('#menubutton').show(); renderMap('map/lol.json');  hidestart();" data-role="tile">
-        <div class="tile-content">
-          <span class="tile-label" id="continue">Continue</span>
+    <div class="jumbotron">
+        <div class="container">
+          <h1>PokemonjSDK </h1>
+          <p> A hackable html/js/css pokèmon engine/SDK</p>
+          <span class="mif-pencil"></span><p style="display:inline"> with </p><span class="mif-heart"></span><p style="display:inline"> by </p><strong style="display:inline">Koso00</strong><br><br>
+          <a onclick="load(); $('#menubutton').show(); renderMap('map/lol.json');  hidestart();" class="btn btn-reverse">
+          Continue
+          </a>
+          <a   onclick="currentmap = 'map/mappa1.json'; renderMap('map/lol.json');$('#menubutton').show();  hidestart();" class="btn btn-reverse">
+            New game
+          </a>
         </div>
       </div>
-      <div style="background: #008CFF;color:#FFF;" class="tile" onclick="currentmap = 'map/mappa1.json'; renderMap('map/lol.json');$('#menubutton').show();  hidestart();" data-role="tile">
-        <div class="tile-content">
-          <span class="tile-label">New game</span>
-        </div>
-      </div>
-    </div>
   </div>
 
 
 
-  <div class="collection" id="battle" style="">
+  <div class="gameframes collection" id="battle" style="">
   </div>
   <div id="battleactions">
   </div>
@@ -239,38 +212,37 @@ menuclose();
   <div class= "expbar">
   </div>
 </div>
-
-
-<div id="scriptnpclist">
-  <canvas id="npclist"></canvas>
-</div>
-
+<br>
   <div class="collection" id="scriptconsole">
     <ul style="width : 100%;" id="sortable">
     </ul>
-    <a class="button" onclick="savescript()"> Save </a>
-    <a class="button" onclick="addline('text')"> Text </a>
-    <a class="button" onclick="addline('choose')"> Text + Choose </a>
-    <a class="button" onclick="addline('compare')"> Compare </a>
-    <a class="button" onclick="addline('setflag')"> Setflag </a>
-    <a class="button" onclick="addline('givepokemon')"> GivePokemon </a>
-    <a class="button" onclick="addline('giveitem')"> GiveItem </a>
-    <a class="button" onclick="addline('die')"> Die </a>
-    <a class="button" onclick="addline('warp')"> Warp </a>
-    <a class="button" onclick="addline('movenpc')"> MoveNpc </a>
+    <a class="btn" onclick="savescript()"> Save </a>
+    <a class="btn danger" onclick="closeconsole()"> Close </a><br>
+    <a class="btn" onclick="addline('text')"> Text </a>
+    <a class="btn" onclick="addline('choose')"> Text + Choose </a>
+    <a class="btn" onclick="addline('compare')"> Compare </a>
+    <a class="btn" onclick="addline('setflag')"> Setflag </a>
+    <a class="btn" onclick="addline('givepokemon')"> GivePokemon </a>
+    <a class="btn" onclick="addline('giveitem')"> GiveItem </a>
+    <a class="btn" onclick="addline('die')"> Die </a>
+    <a class="btn" onclick="addline('warp')"> Warp </a>
+    <a class="btn" onclick="addline('movenpc')"> MoveNpc </a>
 
-      <div  class="input-control select">
-    <select id="scripttype">
+
+    <select class="form-select" id="scripttype">
         <option>walk</option>
         <option>pull</option>
         <option>button</option>
     </select>
-</div>
+
     <br> This is sooooooooooo incomplete bruh, click end to close this section
   </div>
 
 
 </main>
+
+
+
 <div class="bsod" id="bsod">
   <div id="errorhook">
     <h1>:(</h1>

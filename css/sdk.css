@@ -13,6 +13,50 @@ body {
         -ms-filter: "FlipH";
 }
 
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 5em;
+  height: 5em;
+}
+.loader {
+  margin: 60px auto;
+  font-size: 5px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-left: 1.1em solid #ffffff;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+
+
 main ::-webkit-scrollbar {
   display: none;
 }
@@ -110,7 +154,6 @@ background-color: #666699;
 .script p {
   position: absolute;
   left: 10;
-  top: -10;
 }
 
 .script button {
@@ -214,12 +257,7 @@ background-color: #666699;
 #gamehook {
   overflow: scroll;
   height: 400px;
-  width: 90%;
-  position: absolute;
-  margin: auto;
-  top: 10px;
-  right: 0;
-  left: 0;
+
 }
 #gamehook.overlay {
     background-color: SlateGray;
@@ -236,13 +274,7 @@ background-color: #666699;
 display:none;
   overflow: scroll;
   height: 400px;
-  width: 90%;
   background-color : black;
-  position: absolute;
-  margin: auto;
-  top: 60px;
-  right: 0;
-  left: 0;
 }
 
 #mapcanvas {
@@ -272,7 +304,7 @@ display:none;
 #choosehook {
   position: absolute;
   margin: auto;
-  top: 300px;
+  top: 250px;
   right: 0;
   left: 0;
   width: 300px;
@@ -284,7 +316,7 @@ display:none;
 #textbox {
   position: absolute;
   margin: auto;
-  top: 350px;
+  top: 300px;
   right: 0;
   left: 0;
   width: 300px;
@@ -314,29 +346,14 @@ display:none;
 }
 
 .buttoncontainer {
-  width: 85%;
-  position: absolute;
-  top: 80;
-  margin: auto;
-  right: 0;
-  left: 0;
   z-index: 5;
-}
-
+  }
 .buttoncontainer button {
-  display: none;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.3);
-  border-color: #ffffff;
+display:none;
+ position:absolute; top:20px; left:20px;
 }
-
 #gamemenu {
-  width: 80%;
-  position: absolute;
-  margin: auto;
-  top: 120px;
-  right: 0;
-  left: 0;
+
   z-index: 3;
   display: none;
   overflow: scroll;
@@ -387,11 +404,8 @@ display:none;
 }
 
 #start {
-  width: 80%;
-  height: 400px;
   position: absolute;
-  margin: auto;
-  top: 60px;
+  top: 0;
   right: 0;
   left: 0;
   z-index: 3;
@@ -400,11 +414,8 @@ display:none;
 #scriptconsole {
   width: 80%;
   height: 100px;
-  position: absolute;
+  position: relative;
   margin: auto;
-  top: 500px;
-  right: 0;
-  left: 0;
   z-index: 3;
   display: none;
   background-color: white;
@@ -424,9 +435,10 @@ display:none;
 }
 
 #battleactions {
+display:none;
   position: absolute;
   margin: auto;
-  top: 410px;
+  top: 250px;
   right: 0;
   left: 0;
   width: 300px;
@@ -577,4 +589,13 @@ text-align: right;
   opacity: 0.5;
   top: 0px;
   left: 0px;
+}
+
+.gameframes {
+position:absolute;
+top : 10px;
+left : 0;
+right : 0;
+margin : auto;
+width : 90%;
 }

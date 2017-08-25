@@ -1,10 +1,10 @@
-currentmap = "map/mappa2.json";
+currentmap = "map/mappa1.json";
 var bump = new Audio('audio/bump.mp3');
 var assets = "assets/"; //set the directory for your assets location
 
 var playermovingonscript = false;
 var joystick = new VirtualJoystick({
-  container: document.getElementById("gamehook")
+  container: document.getElementById("introdiv")
 });
 var map;
 var flag = new Array(5000).fill(0);
@@ -115,21 +115,21 @@ playerPos.y = moveto.y = playerPos.gridy * 32;
 db = 3;
 
 $.ajax({
-  url: "php/moves.php"
+  url: "http://koso00.altervista.org/php/moves.php"
 }).done(function(lol) {
 dbmoves = JSON.parse(lol);
 dbloaded();
 })
 
 $.ajax({
-  url: "php/item.php"
+  url: "http://koso00.altervista.org/php/item.php"
 }).done(function(lol) {
 dbitem = JSON.parse(lol);
 dbloaded();
 })
 
 $.ajax({
-  url: "php/pokemon.php"
+  url: "http://koso00.altervista.org/php/pokemon.php"
 }).done(function(lol) {
 dbpokemon = JSON.parse(lol);
 dbloaded();
@@ -677,3 +677,9 @@ function drawnpc(j,i,d,id,special)
     $("#"+c.id).removeClass("flip");
   }
 }
+
+var socket = io();
+
+socket.on('message', function(msg){
+$.notify(msg)
+});

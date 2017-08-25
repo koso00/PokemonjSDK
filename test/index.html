@@ -1,1 +1,23 @@
-<script src="../js/jquery-3.2.1.min.js"></script>
+<canvas id = "main"></canvas>
+<script>
+var canvas = document.getElementById('main');
+
+var ctx = document.getElementById('main').getContext('2d');
+var tile = new Image();
+tile.src = "png.png";
+tile.onload = function() {
+
+  ctx.save();
+
+  // Draw mask to buffer
+  ctx.clearRect(0, 0, this.width, this.height);
+  ctx.drawImage(tile, 0, 0, this.width, this.height, 0, 0, this.width, this.height);
+
+  // Draw the color only where the mask exists (using source-in)
+  ctx.fillStyle = "rgb(255,0,0)"; // 
+  ctx.globalCompositeOperation = "source-in";
+  ctx.fillRect(0, 0, this.width, this.height);
+
+  ctx.restore();
+}
+</script>

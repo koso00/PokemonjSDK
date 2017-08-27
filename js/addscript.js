@@ -303,9 +303,10 @@ function addline(id) {
     });
 
     var string = "<select>";
-    $('.mapchanger').each(function() {
-      string += "<option>"+$(this).attr("mapvalue")+"</option>";
-    });
+    for (i = 0; i < maplist.length; i ++)
+    {
+    string += "<option>"+maplist[i]+"</option>";
+    }
     string += "</select>";
     $(".dialog-content").append(string);
 
@@ -470,18 +471,12 @@ function savescript() {
       }
     }
 
-    $.ajax({
-      type: "post",
-      data: {
-        "script": JSON.stringify(map)
-      },
-      url: "php/rewritemap.php?map=" + currentmap
-    }).done(function(lol) {
-      //console.log("Addedd script successfully");
+      rewritemap(currentmap,JSON.stringify(map));
+
       codeview();
       $(".scriptedit").remove();
       $("#scriptconsole").hide();
-    });
+
   } else {
     codeview();
     $(".scriptedit").remove();
@@ -495,16 +490,11 @@ function removescript() {
       for (i = 0; i < map.scripts.length; i++) {
         if ((scriptcoor.x == map.scripts[i].x) && (scriptcoor.y == map.scripts[i].y)) {
           map.scripts.splice(i, 1);
-          $.ajax({
-            type: "post",
-            data: {
-              "script": JSON.stringify(map)
-            },
-            url: "php/rewritemap.php?map=" + currentmap
-          }).done(function(lol) {
+
+                rewritemap(currentmap,JSON.stringify(map));
             console.log("Removed script successfully");
             codeview();
-          });
+
         }
       }
 }

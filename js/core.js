@@ -2,11 +2,13 @@ currentmap = "map/mappa1.json";
 var bump = new Audio('audio/bump.mp3');
 var assets = "assets/"; //set the directory for your assets location
 
+var socket = io();
 var playermovingonscript = false;
 var joystick = new VirtualJoystick({
   container: document.getElementById("introdiv")
 });
 var map;
+var maplist = [];
 var flag = new Array(5000).fill(0);
 var bag = new Array(10).fill(0);
 var maploaded = false;
@@ -111,29 +113,16 @@ moveto = {
   };
 playerPos.x = moveto.x = playerPos.gridx * 32;
 playerPos.y = moveto.y = playerPos.gridy * 32;
+dbmoves = [];
+dbpokemon = [];
+dbitem = [];
 
 db = 3;
+socket.emit("ini","items.ini");
+socket.emit("ini","moves.ini");
+socket.emit("ini","pokemon.ini");
 
-$.ajax({
-  url: "http://koso00.altervista.org/php/moves.php"
-}).done(function(lol) {
-dbmoves = JSON.parse(lol);
-dbloaded();
-})
 
-$.ajax({
-  url: "http://koso00.altervista.org/php/item.php"
-}).done(function(lol) {
-dbitem = JSON.parse(lol);
-dbloaded();
-})
-
-$.ajax({
-  url: "http://koso00.altervista.org/php/pokemon.php"
-}).done(function(lol) {
-dbpokemon = JSON.parse(lol);
-dbloaded();
-})
 
 function dbloaded(){
   db --;
@@ -567,11 +556,7 @@ function save() {
   for (i = 0; i < 6; i++) {
     dat.party[i] = party[i];
   }
-  $.ajax({
-    url: "php/save.php?data=" + JSON.stringify(dat)
-  }).done(function(lol) {
-    console.log(lol);
-  });
+  socket.emit('save',JSON.stringify(dat));
 }
 
 function load() {
@@ -678,8 +663,30 @@ function drawnpc(j,i,d,id,special)
   }
 }
 
-var socket = io();
+
+socket.emit("listmap");
 
 socket.on('message', function(msg){
 $.notify(msg)
 });
+
+socket.on("listmap",function(list){
+  maplist = list;
+  console.log(list);
+})
+
+socket.on("ini",function(file,ini)
+{
+  switch(file)
+  {
+    case "moves.ini"  : dbmoves = ini; break;
+    case "pokemon.ini" : dbpokemon = ini; break;
+    case "items.ini" : dbitem = ini; break;
+  }
+  dbloaded();
+})
+
+function rewritemap(file,map)
+{
+  socket.emit("rewritemap",file,map)
+}

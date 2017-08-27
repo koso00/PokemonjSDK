@@ -4,11 +4,11 @@
   "description": "A Js Pokemon engine",
   "main": "index.js",
   "directories": {
-    "test": "test"
-  },
+    "test": "tetttttttttttttttst"
+
   "scripts": {
     "start": "node index.js",
-    "test": "node index.js"
+    "test":"npm start"
   },
   "repository": {
     "type": "git",

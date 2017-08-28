@@ -4,8 +4,7 @@
   "description": "A Js Pokemon engine",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test":"npm start"
+    "start": "node index.js","test":"npm start"
   },
   "repository": {
     "type": "git",

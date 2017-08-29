@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "description": "A Js Pokemon engine",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
   "scripts": {
     "start": "node index.js &",
     "test": "node index.js &"

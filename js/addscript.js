@@ -565,44 +565,75 @@ function closeconsole(){
   }
 }
 
-$("#introdiv").mousedown(function(ev){
-  if ((ev.which == 3) && ($("#scriptconsole").is(":visible") == false))
-  {
-    $("#dropedit").hide();
-    $("#dropadd").hide();
-    scriptcoor = {
-      x: Math.floor(mouse.left / 32),
-      y: Math.floor(mouse.top / 32)
-    }
-    $("#mousefollow").show();
-    $("#mousefollow").css("left", Math.floor(mouse.left / 32) * 32) + "px";
-    $("#mousefollow").css("top", Math.floor(mouse.top / 32) * 32) + "px";
-    $("#dropdownmenu").css("left",mouse.left +2  );
-    $("#dropdownmenu").css("top",mouse.top);
-    if (map.scripts.length != 0){
-    for (i = 0; i < map.scripts.length; i++) {
-      if ((scriptcoor.x == map.scripts[i].x) && (scriptcoor.y == map.scripts[i].y))
-      {
-        $("#dropadd").hide();
-        console.log("edit because script")
-        $("#dropedit").show(200);
-    }else{ if ($("#dropedit").is(":visible") == false){
-      console.log("add because script")
-      $("#dropadd").show(200);}
-    }
+function dropdownopenhandler(){
+
+  $("#dropedit").hide();
+  $("#dropadd").hide();
+  scriptcoor = {
+    x: Math.floor(mouse.left / 32),
+    y: Math.floor(mouse.top / 32)
   }
+  $("#mousefollow").show();
+  $("#mousefollow").css("left", Math.floor(mouse.left / 32) * 32) + "px";
+  $("#mousefollow").css("top", Math.floor(mouse.top / 32) * 32) + "px";
+  $("#dropdownmenu").css("left",mouse.left +2  );
+  $("#dropdownmenu").css("top",mouse.top);
+  if (map.scripts.length != 0){
+  for (i = 0; i < map.scripts.length; i++) {
+    if ((scriptcoor.x == map.scripts[i].x) && (scriptcoor.y == map.scripts[i].y))
+    {
+      $("#dropadd").hide();
+      console.log("edit because script")
+      $("#dropedit").show();
+  }else{ if ($("#dropedit").is(":visible") == false){
+    console.log("add because script")
+    $("#dropadd").show();}
+  }
+}
 }else{
-    console.log("add because no script")
-    $("#dropadd").show(200);
-  }
+  console.log("add because no script")
+  $("#dropadd").show();
+}
+}
 
 
+
+
+click = false;
+
+/*
+$("#introdiv").mousedown(function(){
+  if (click == false)
+  {
+    $("<div style='position: absolute; left: " + (mouse.left -20) +  " ; top : " +(mouse.top-20) +";'  class='long'></div>").appendTo("#gamehook");
+      long = false;
+      click = true;
+      longpress = setTimeout(function(){ long = true },1000)
   }
 })
 
-$("body").click(function(){
-  if (($("#dropedit").is(":visible") == true) || ($("#dropadd").is(":visible") == true)){
-    $("#dropedit").hide(200);
-    $("#dropadd").hide(200);
+$("#introdiv").mouseup(function(ev){
+  if (click == true)
+  {
+    click = false;
+    $(".long").remove();
+    if (long == true){
+
+      if ($("#scriptconsole").is(":visible") == false)
+      {
+    dropdownopenhandler();
+      }
+
+    }else{
+
+      if (($("#dropedit").is(":visible") == true) || ($("#dropadd").is(":visible") == true)){
+      $("#dropedit").hide(200);
+      $("#dropadd").hide(200);}
+      if ((ev.which == 3) && ($("#scriptconsole").is(":visible") == false))
+      {
+      dropdownopenhandler();
+      }
+    }
+    clearTimeout(longpress)
   }
-})
+})*/

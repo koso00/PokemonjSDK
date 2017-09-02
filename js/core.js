@@ -4,9 +4,9 @@ var assets = "assets/"; //set the directory for your assets location
 
 var socket = io();
 var playermovingonscript = false;
-var joystick = new VirtualJoystick({
-  container: document.getElementById("introdiv")
-});
+joystick = new joystick("#introdiv");
+joystick.start();
+
 var map;
 var maplist = [];
 var flag = new Array(5000).fill(0);
@@ -156,72 +156,7 @@ function loadJSON(mapname, callback) {
 setInterval(function(){
   if ((maploaded == true) && (pause == false)) {
     document.title = playerPos.gridx + " " + playerPos.gridy + " " + pause;
-    if ((moving == false) && (lockplayer == false)) {
-      if ((key.right === true) || (joystick.right() == true)) {
-        playerPos.direction = 0;
-        if ((playerPos.gridx < map.width - 1) && (collisionright() == false)) {
-          if ((key.s === true) || (joystick.deltaX() > 70)) {
-            speed = 4;
-          } else {
-            speed = 2;
-          }
-          moving = true;
-          scriptflag = false;
-          moveto.x += 32;
-          playerPos.gridx++;
-        } else {
-          bump.play();
-        }
-      } else if ((key.left === true) || (joystick.left() == true)) {
-        playerPos.direction = 180;
-        if ((playerPos.gridx != 0) && (collisionleft() == false)) {
-          if ((key.s === true) || (joystick.deltaX() < -70)) {
-            speed = 4;
-          } else {
-            speed = 2;
-          }
-          moving = true;
-          scriptflag = false;
-          moveto.x -= 32;
-          playerPos.gridx--;
-        } else {
-          bump.play();
-        }
-      }
-    }
-    if ((moving == false) && (lockplayer == false)) {
-      if ((key.up === true) || (joystick.up() == true)) {
-        playerPos.direction = 90;
-        if ((playerPos.gridy != 0) && (collisiontop() == false)) {
-          if ((key.s === true) || (joystick.deltaY() < -70)) {
-            speed = 4;
-          } else {
-            speed = 2;
-          }
-          moving = true;
-          scriptflag = false;
-          moveto.y -= 32;
-          playerPos.gridy--;
-        } else {
-          bump.play();
-        }
-      } else if ((key.down === true) || (joystick.down() == true)) {
-        playerPos.direction = 270;
-        if ((playerPos.gridy < map.height - 1) && (collisionbottom() == false)) {
-          if ((key.s === true) || (joystick.deltaY() > 70)) {
-            speed = 4;
-          } else {
-            speed = 2;
-          }
-          moving = true;
-          scriptflag = false;
-          moveto.y += 32;
-          playerPos.gridy++;
-        } else {
-          bump.play();
-        }
-      }
-    }
+
     if (moving == false) {
       switch (playerPos.direction) {
         case 0:       i_ = 3;break;
@@ -307,7 +242,7 @@ setInterval(function(){
    if (($("#dropedit").is(":visible") == false) && ($("#dropadd").is(":visible")== false))
     {$("#mousefollow").hide();}
 
-
+    if ($("#scriptconsole").is(":visible") == false){$("#scriptconsolewrapper").hide();}else{$("#scriptconsolewrapper").show();}
     var h = parseInt(Date().split(" ")[4].split(":")[0]);
     if ((h>4) && (h <=6)){ $("#dayfilter").css("background-color","#ff99cc")}
     if ((h>6) && (h <=8)){ $("#dayfilter").css("background-color","#ffcc99")}
@@ -318,9 +253,10 @@ setInterval(function(){
    },1000 / 60);
 
 
-
-function collisionright()
+function collisions(dir)
 {
+switch(dir){
+case "right":
 for (ii = 0; ii < map.layers.length - 1; ii++) {
   if (map.layers[ii].name === "Collisions") {
     break;
@@ -349,10 +285,9 @@ if ((map.layers[ii].data[tileid] == 0) && (map.layers[ii1].data[tileid1] == 0) &
   if ($("#nocollisioncheck").prop("checked") == false)
   {  return true;} else { return false;}
 }
-}
+break;
 
-function collisionleft()
-{
+case "left":
 for (ii = 0; ii < map.layers.length - 1; ii++) {
   if (map.layers[ii].name === "Collisions") {
     break;
@@ -379,10 +314,9 @@ if ((map.layers[ii].data[tileid] == 0) && (map.layers[ii1].data[tileid1] == 0) &
   if ($("#nocollisioncheck").prop("checked") == false)
   {  return true;} else { return false;}
 }
-}
+break;
 
-function collisiontop()
-{
+case "up":
 for (ii = 0; ii < map.layers.length - 1; ii++) {
   if (map.layers[ii].name === "Collisions") {
     break;
@@ -409,10 +343,9 @@ if ((map.layers[ii].data[tileid] == 0) && (map.layers[ii1].data[tileid1] == 0) &
   if ($("#nocollisioncheck").prop("checked") == false)
   {  return true;} else { return false;}
 }
-}
+break;
 
-function collisionbottom()
-{
+case "down":
 for (ii = 0; ii < map.layers.length - 1; ii++) {
   if (map.layers[ii].name === "Collisions") {
     break;
@@ -439,22 +372,107 @@ if ((map.layers[ii].data[tileid] == 0) && (map.layers[ii1].data[tileid1] == 0) &
   if ($("#nocollisioncheck").prop("checked") == false)
   {  return true;} else { return false;}
 }
+break;
 }
+}
+
+function move(dir)
+{
+  if ((moving == false)&&(lockplayer == false)&&(maploaded == true) && (pause == false))
+  {
+  switch (dir)
+  {
+    case "up" :
+    playerPos.direction = 90;
+    if ((playerPos.gridy != 0) && (collisions("up") == false)) {
+      if ((key.s === true) || (joystick.distance() < -70)) {
+        speed = 4;
+      } else {
+        speed = 2;
+      }
+      moving = true;
+      scriptflag = false;
+      moveto.y -= 32;
+      playerPos.gridy--;
+    } else {
+      bump.play();
+    }
+    break;
+    case "left":
+    playerPos.direction = 180;
+    if ((playerPos.gridx != 0) && (collisions("left") == false)) {
+      if ((key.s === true) || (joystick.distance() < -70)) {
+        speed = 4;
+      } else {
+        speed = 2;
+      }
+      moving = true;
+      scriptflag = false;
+      moveto.x -= 32;
+      playerPos.gridx--;
+    } else {
+      bump.play();
+    }
+    break;
+    case "right" :
+      playerPos.direction = 0;
+      if ((playerPos.gridx < map.width - 1) && (collisions("right") == false)) {
+        if ((key.s === true) || (joystick.distance() > 70)) {
+          speed = 4;
+        } else {
+          speed = 2;
+        }
+        moving = true;
+        scriptflag = false;
+        moveto.x += 32;
+        playerPos.gridx++;
+      } else {
+        bump.play();
+      }
+      break;
+    case "down" :
+    playerPos.direction = 270;
+    if ((playerPos.gridy < map.height - 1) && (collisions("down") == false)) {
+      if ((key.s === true) || (joystick.distance() > 70)) {
+        speed = 4;
+      } else {
+        speed = 2;
+      }
+      moving = true;
+      scriptflag = false;
+      moveto.y += 32;
+      playerPos.gridy++;
+    } else {
+      bump.play();
+    }
+     break;
+  }
+}
+}
+
+$("#introdiv").on("joystickright",function(){move("right")})
+$("#introdiv").on("joystickleft",function(){move("left")})
+$("#introdiv").on("joystickup",function(){move("up")})
+$("#introdiv").on("joystickdown",function(){move("down")})
 
 function keyDown(e) {
   if (e.keyCode === 39) {
      e.preventDefault();
     key.right = true;
+    move("right")
   } else if (e.keyCode === 37) {
      e.preventDefault();
     key.left = true;
+    move("left")
   }
   if (e.keyCode === 38) {
      e.preventDefault();
     key.up = true;
+    move("up")
   } else if (e.keyCode === 40) {
      e.preventDefault();
     key.down = true;
+    move("down")
   }
   if (e.keyCode === 83) {
     key.s = true;
@@ -667,7 +685,7 @@ function drawnpc(j,i,d,id,special)
 socket.emit("listmap");
 
 socket.on('message', function(msg){
-$.notify(msg)
+$.notify(msg,"success")
 });
 
 socket.on("listmap",function(list){

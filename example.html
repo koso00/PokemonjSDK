@@ -1,0 +1,16 @@
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="js/joy.js"></script>
+<body>
+
+</body>
+<script>
+joystick = new joystick("body");
+joystick.start();
+$("body").on("joystickright",function(){console.log("right")})
+$("body").on("joystickleft",function(){console.log("left")})
+</script>
+<a onclick="joystick.start()">start</a>
+<a onclick="joystick.pause()">pause</a>

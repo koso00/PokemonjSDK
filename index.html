@@ -11,11 +11,11 @@
   <link href="css/sdk.css" rel="stylesheet">
   <link href="css/docs.css" rel="stylesheet">
   <link href="css/metro-icons.css" rel="stylesheet">
-  	<link rel="stylesheet" href="css/osumenu.css">
-  <script src="js/virtualjoystick.js"></script>
+  <link rel="stylesheet" href="css/osumenu.css">
   <script src="js/smooth-scroll.min.js"></script>
   <script src="js/osumenu.js"></script>
   <script src="js/notify.js"></script>
+<script src="js/longclick.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 
 
@@ -41,14 +41,15 @@
 
   <header class="masthead">
         <div class="container">
-          <a href="/" class="masthead-logo">
+          <a onclick=" $('.masthead-nav').toggle(); " class="masthead-logo">
             <span class="mega-octicon octicon-package"></span>
             PokemonJS
           </a>
 
-        <!--  <nav class="masthead-nav">
+         <nav class="masthead-nav" style="display:none">
             <div class="form-checkbox"> <label class="text-white"><input id="nocollisioncheck" type="checkbox"/>No collisions</label></div>
-          </nav>-->
+            <div class="form-checkbox"> <label class="text-white"><input id="nojoystick" type="checkbox"/>No joystick</label></div>
+          </nav>
         </div>
       </header>
 
@@ -256,11 +257,10 @@ menuclose();
 </div>
 <!--
 <script src="js/bsod.js"></script>-->
+<script src="js/joy.js"></script>
 <script src="js/core.js"></script>
 <script src="js/render.js"></script>
 <script src="js/scriptcore.js"></script>
 <script src="js/addscript.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/battle.js"></script>
-
-<script src="js/metro.js"></script>

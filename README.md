@@ -1,4 +1,6 @@
 # PokemonjSDK
+[![Build Status](https://travis-ci.org/koso00/PokemonjSDK.svg?branch=master)](https://travis-ci.org/koso00/PokemonjSDK)
+
 The PokemonjSDK is a port of the PokemonSDK to the web, to make a better looking SDK, easier to mantain and easier to use, using javascript and json file format to import map.
 
 ## How to import maps
